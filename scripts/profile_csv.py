@@ -4,8 +4,10 @@ import sys
 
 def count_records(path):
     with open(path, 'r', encoding='utf-8', newline='') as f:
-        reader = csv.reader(f)
-        header = next(reader)
+        reader = csv.reader(f) 
+        header = next(reader, None)
+        if header is None:
+            raise ValueError(f'Файл {f.name} пустой')
         rows_number = sum(1 for _ in reader)
         return (len(header), rows_number)
 
