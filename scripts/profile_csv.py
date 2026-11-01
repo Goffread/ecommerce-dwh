@@ -28,3 +28,4 @@ if __name__ == '__main__':
         else:
             print(f'Не существует папки {path_data}')
         sys.exit(1)
+        
