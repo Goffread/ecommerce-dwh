@@ -16,8 +16,15 @@ if __name__ == '__main__':
     path_glob = sorted(path_data.glob("*.csv"))
     if path_glob:
         for path in path_glob:
-            columns, rows = count_records(path)
+            try:
+                columns, rows = count_records(path)
+            except ValueError as e:
+                print(e)
+                continue
             print(f"File: {path.name}, column num: {columns}, row num: {rows}")
     else:
-        print(f'В папке {path_data} нет файлов .csv')
+        if pathlib.Path(path_data).is_dir():
+            print(f'В папке {path_data} нет файлов .csv')
+        else:
+            print(f'Не существует папки {path_data}')
         sys.exit(1)
