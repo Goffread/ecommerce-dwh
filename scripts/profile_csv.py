@@ -20,12 +20,11 @@ if __name__ == '__main__':
                 columns, rows = count_records(path)
             except ValueError as e:
                 print(e)
-                continue
+                sys.exit(1)
             print(f"File: {path.name}, column num: {columns}, row num: {rows}")
     else:
-        if pathlib.Path(path_data).is_dir():
+        if path_data.is_dir():
             print(f'В папке {path_data} нет файлов .csv')
         else:
             print(f'Не существует папки {path_data}')
         sys.exit(1)
-        
