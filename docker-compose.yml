@@ -9,6 +9,7 @@ services:
       - "127.0.0.1:${POSTGRES_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./sql/00_create_schemas.sql:/docker-entrypoint-initdb.d/00_create_schemas.sql:ro
 
 volumes:
   postgres_data:
