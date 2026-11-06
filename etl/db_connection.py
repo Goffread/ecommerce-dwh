@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 class ConfigError(Exception):
     pass
 
-class ConnectTimeout(Exception):
+class ExpiredTimeout(Exception):
     pass
 
 load_dotenv()
@@ -40,8 +40,8 @@ def get_connection():
     try:
         conn = psycopg.connect(host=host, port=port, dbname=dbname, user=user, 
                                password=password, connect_timeout=CONNECT_TIMEOUT)
-    except psycopg.errors.ConnectionTimeout:
-        raise ConnectTimeout(f"Время ожидания подключения истекло\nХост: {host}, Порт: {port}")
+    except psycopg.errors.ConnectionTimeout as c:
+        raise ExpiredTimeout(f"Время ожидания подключения истекло\nХост: {host}, Порт: {port}") from c
     return conn 
 
 if __name__ == '__main__':
@@ -54,6 +54,6 @@ if __name__ == '__main__':
     except ConfigError as e:
         print(e)
         sys.exit(1)
-    except ConnectTimeout as c:
+    except ExpiredTimeout as c:
         print(c)
         sys.exit(1)
