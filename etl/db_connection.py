@@ -33,7 +33,7 @@ def get_connection():
     user = config['POSTGRES_USER']
     password = config['POSTGRES_PASSWORD']
     
-    return psycopg.connect(host=host, port=port, dbname=dbname, user=user, password=password, connect_timeout=20)
+    return psycopg.connect(host=host, port=port, dbname=dbname, user=user, password=password, connect_timeout=3)
 
 if __name__ == '__main__':
     try:
@@ -46,5 +46,5 @@ if __name__ == '__main__':
         print(e)
         sys.exit(1)
     except psycopg.errors.ConnectionTimeout as c:
-        print('Время ожидания подключения истекло')
+        print(f'Время ожидания подключения истекло: {c}')
         sys.exit(1)
