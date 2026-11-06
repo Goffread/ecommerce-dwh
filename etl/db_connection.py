@@ -6,7 +6,11 @@ from dotenv import load_dotenv
 class ConfigError(Exception):
     pass
 
+class ConnectTimeout(Exception):
+    pass
+
 load_dotenv()
+CONNECT_TIMEOUT = 3 #seconds
 
 def read_config():
     env_names = ['PORT', 'DB', 'USER', 'PASSWORD']
@@ -32,8 +36,13 @@ def get_connection():
     dbname = config['POSTGRES_DB']
     user = config['POSTGRES_USER']
     password = config['POSTGRES_PASSWORD']
-    
-    return psycopg.connect(host=host, port=port, dbname=dbname, user=user, password=password, connect_timeout=3)
+
+    try:
+        conn = psycopg.connect(host=host, port=port, dbname=dbname, user=user, 
+                               password=password, connect_timeout=CONNECT_TIMEOUT)
+    except psycopg.errors.ConnectionTimeout:
+        raise ConnectTimeout(f"Время ожидания подключения истекло\nХост: {host}, Порт: {port}")
+    return conn 
 
 if __name__ == '__main__':
     try:
@@ -45,6 +54,6 @@ if __name__ == '__main__':
     except ConfigError as e:
         print(e)
         sys.exit(1)
-    except psycopg.errors.ConnectionTimeout as c:
-        print(f'Время ожидания подключения истекло: {c}')
+    except ConnectTimeout as c:
+        print(c)
         sys.exit(1)
