@@ -45,6 +45,6 @@ if __name__ == '__main__':
     except ConfigError as e:
         print(e)
         sys.exit(1)
-    except psycopg.errors.CancellationTimeout as c:
+    except psycopg.errors.ConnectionTimeout as c:
         print('Время ожидания подключения истекло')
         sys.exit(1)
