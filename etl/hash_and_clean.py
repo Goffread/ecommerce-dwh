@@ -16,6 +16,4 @@ if __name__ == '__main__':
     path = pathlib.Path(__file__).resolve().parent.parent/'data'
     file_path = path/'customers.csv'
     file_hash = file_sha256(file_path)
-    #print(file_hash)
-    test_list = ['', '0', ' ', '123']
-    print(clean_row(test_list))
+    print(file_hash)
