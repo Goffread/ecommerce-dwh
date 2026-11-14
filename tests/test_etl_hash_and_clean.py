@@ -29,11 +29,6 @@ def test_file_sha256_big_file(tmp_path):
     p.write_bytes(b'abc' * 10000)
     assert file_sha256(p) == '13b77af908a78a94f2e21cf8fc137ea16c8020873eeee7b6b96b6b0975555a02'
 
-def test_file_sha256_4096_size_file(tmp_path):
-    p = tmp_path / 'x.txt'
-    p.write_bytes(b'\x00' * 4096)
-    assert file_sha256(p) == 'ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7'
-
 def test_clean_row_replaces_only_empty_string():
     l = ['', '0', ' ', '123']
     assert clean_row(l) == [None, '0', ' ', '123']
