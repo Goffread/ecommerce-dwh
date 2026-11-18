@@ -25,3 +25,33 @@ CREATE TABLE IF NOT EXISTS raw.customers (
     customer_state text,
     log_id bigint NOT NULL REFERENCES raw.load_journal (log_id)
 );
+CREATE TABLE IF NOT EXISTS raw.order_items (
+    order_id text,
+    order_item_id text,
+    product_id text,
+    seller_id text,
+    shipping_limit_date text,
+    price text,
+    freight_value text,
+    log_id bigint NOT NULL REFERENCES raw.load_journal (log_id)
+);
+CREATE TABLE IF NOT EXISTS raw.order_payments (
+    order_id text,
+    payment_sequential text,
+    payment_type text,
+    payment_installments text,
+    payment_value text,
+    log_id bigint NOT NULL REFERENCES raw.load_journal (log_id)
+);
+CREATE TABLE IF NOT EXISTS raw.products (
+    product_id text,
+    product_category_name text,
+    product_name_lenght text,
+    product_description_lenght text,
+    product_photos_qty text,
+    product_weight_g text,
+    product_length_cm text,
+    product_height_cm text,
+    product_width_cm text,
+    log_id bigint NOT NULL REFERENCES raw.load_journal (log_id)
+);
