@@ -5,3 +5,6 @@ data/*
 __pycache__/
 logs/*
 !logs/.gitkeep
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
