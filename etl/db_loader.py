@@ -40,12 +40,10 @@ def load_file(conn, path, table):
             existing_hashes = cur.fetchall()
 
         if any(row[0] == file_hash for row in existing_hashes):
-            return logger.info("File %s skipped", file_name)
+            return f'File {file_name} skipped'
 
         if existing_hashes:
-            raise FileWasChangedError(
-                logger.error("File %s exists, but with another data", file_name)
-            )
+            raise FileWasChangedError(f"File {file_name} exists, but with another data") 
 
         with conn.cursor() as cur:
             cur.execute(
@@ -67,8 +65,7 @@ def load_file(conn, path, table):
                 for row in rows:
                     copy.write_row(clean_row(row) + [log_id])
     
-    return logger.info("File %s loaded to %s", (file_name, table))
-
+    return f"File {file_name} loaded to {table}"
 
 
 if __name__ == '__main__':
@@ -86,12 +83,12 @@ if __name__ == '__main__':
                 file_path = path / f"{file}.csv"
                 table = f"raw.{file}"
                 try:
-                    load_file(conn, file_path, table)
+                    logger.info(load_file(conn, file_path, table))
                 except Exception as e:
-                    logger.info("Error %s with file %s", (e, file_path))
                     any_error = True
+                    logger.exception("Error with file %s", file_path)
             if any_error:
                 sys.exit(1)
     except Exception as e:
-        logger.error("Error %s with connection", e)
+        logger.exception("Error %s with connection", e)
         sys.exit(1)
