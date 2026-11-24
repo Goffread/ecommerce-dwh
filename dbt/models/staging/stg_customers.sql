@@ -1,6 +1,6 @@
 WITH ranked_source AS (
   SELECT *,
-         ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY log_id DESC) AS rn
+         ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY log_id DESC) AS rn
     FROM {{ source('raw', 'customers') }}
 )
 SELECT customer_id,
