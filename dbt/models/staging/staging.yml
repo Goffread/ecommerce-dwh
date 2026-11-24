@@ -10,3 +10,11 @@ models:
     - name: customer_id
       data_tests:
        - unique
+ - name: stg_order_items
+   columns:
+    - name: order_id
+      data_tests:
+       - not_null
+    - name: order_item_id
+      data_tests:
+       - not_null
