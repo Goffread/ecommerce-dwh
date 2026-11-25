@@ -8,7 +8,7 @@ SELECT order_id,
        product_id,
        seller_id,
        shipping_limit_date::TIMESTAMP AS shipping_limit_date,
-       price::NUMERIC AS price,
-       freight_value::NUMERIC AS freight_value
+       price::NUMERIC(10, 2) AS price,
+       freight_value::NUMERIC(10, 2) AS freight_value
   FROM ranked_source
  WHERE rn = 1
