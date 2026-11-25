@@ -26,3 +26,9 @@ models:
     - name: payment_sequential
       data_tests:
        - not_null
+ - name: stg_products
+   columns:
+    - name: product_id
+      data_tests:
+       - unique
+       - not_null
